@@ -1,0 +1,29 @@
+:root {
+    --textgray: rgb(24, 24, 24);
+}
+
+/* Gives all divs in the header some padding */
+header div {
+    padding: 10px;
+}
+
+#timer {
+    float: right;
+}
+
+#highscorelink {
+    display: inline-block;
+}
+
+#highscorelink a:link {
+    color: var(--textgray);
+}
+
+#highscorelink a:visited {
+    color: var(--textgray);
+}
+
+#container {
+    width: 60%; /* This width should be in a media query */
+    margin: auto;
+}
