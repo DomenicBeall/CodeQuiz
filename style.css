@@ -48,6 +48,12 @@ header div {
 #container {
     width: 60%; /* This width should be in a media query */
     margin: auto;
+    padding-top: 20px;
+}
+
+#response {
+    font-weight: bold;
+    padding-top: 20px;
 }
 
 button {
@@ -58,5 +64,7 @@ button {
     text-decoration: none;
     border: none;
     border-radius: 10px;
+    margin: auto;
     margin-top: 10px;
+    width: 30%;
 }

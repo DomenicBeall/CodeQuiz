@@ -30,12 +30,15 @@ function clearContainer() {
 function renderNextQuestion() {
     clearContainer(); // Clear the currently displayed elements
     
+    currentQuestion ++;
+
     var question = questions[currentQuestion];
 
     console.log(question.choices.length);
 
     // Question
     var questionText = document.createElement("h1");
+    questionText.setAttribute("class", "text-center");
     questionText.innerText = question.title;
     container.append(questionText);
 
@@ -54,14 +57,10 @@ function submitAnswer(div) {
     var submittedAnswer = div.getAttribute("data-answer");
     
     if (submittedAnswer === questions[currentQuestion].answer) {
-        // Correct answer next question
-        currentQuestion ++;
-        renderNextQuestion();
+        displayAnswerResponse("Correct!");
     } else {
-        console.log("False, moron");
+        displayAnswerResponse("Wrong!");
     }
-
-    displayAnswerResponse();
 }
 
 function displayAnswerResponse(message) {
@@ -70,15 +69,25 @@ function displayAnswerResponse(message) {
     if (responseWindow === null) {
         responseWindow = document.createElement("div");
         responseWindow.setAttribute("id", "response");
+        responseWindow.setAttribute("class", "text-center");
         responseWindow.style.display = "none";
-        container.append(responseWindow);
+        container.append(responseWindow);       
     }
 
-    responseWindow.style.display = "block"; // Here 
+    responseWindow.textContent = message;
+    responseWindow.style.display = "block";
+
+    var thisInterval = setInterval(function() {
+        responseWindow.style.display = "none";
+        renderNextQuestion();
+        clearInterval(thisInterval);
+    }, 1000);
 }
 
+
+
 function startQuiz() {
-    currentQuestion = 0; // Start at the first question
+    currentQuestion = -1; // Start at the first question
 
     renderNextQuestion();
 }
