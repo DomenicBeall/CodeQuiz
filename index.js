@@ -134,6 +134,8 @@ function showFinishedScreen() {
         highscores = [...highscores, highscoreEntry];
 
         localStorage.setItem("highscores", JSON.stringify(highscores));
+
+        location.replace("highscores.html");
     });
     form.append(button);
 
