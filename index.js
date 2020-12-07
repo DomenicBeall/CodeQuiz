@@ -112,13 +112,29 @@ function showFinishedScreen() {
     form.append(label);
 
     var input = document.createElement("input");
-    label.setAttribute("type", "text");
-    label.setAttribute("id", "initials");
-    label.setAttribute("name", "initials");
+    input.setAttribute("type", "text");
+    input.setAttribute("id", "initial");
+    input.setAttribute("name", "initials");
     form.append(input);
     
     var button = document.createElement("button");
-    button.innerText = "Ur gay";
+    button.innerText = "Submit High Score";
+    button.addEventListener("click", function(event) {
+        event.preventDefault();
+
+        var highscores = JSON.parse(localStorage.getItem("highscores"));
+
+        if (!highscores) {
+            highscores = [];
+        }
+
+        var name = document.getElementById("initial").value;
+        var highscoreEntry = { Name: name, Score: timer }
+
+        highscores = [...highscores, highscoreEntry];
+
+        localStorage.setItem("highscores", JSON.stringify(highscores));
+    });
     form.append(button);
 
     content.append(form);
