@@ -1,24 +1,32 @@
-var container = document.getElementById("container");
-var content = document.getElementById("content");
-var currentQuestion = 0;
-var timer = 50;
-var quizOver = false;
+var content = document.getElementById("content"); // This div stores the dynamic content
+var currentQuestion = 0; // Stores the current question the user is answering
+var timer = 50; // Stores the time the user has left
+var quizOver = false; // Keeps track of if the user has finished the quiz
 
 displayLanding();
 
-function displayLanding() {
-    clearContent(); // Remove the currently displayed elements
+// Removes everything that is currently being displayed in the content div
+function clearContent() {
+    content.innerHTML = "";
+}
 
+// Displays the landing page shown before the quiz starts
+function displayLanding() {
+    clearContent();
+
+    // Create and append a header
     var title = document.createElement("h1");
     title.innerText = "Coding Quiz Challenge";
     title.setAttribute("class", "text-center");
     content.append(title);
 
+    // Create and append a description of the quiz
     var description = document.createElement("p");
-    description.innerText = "This is some stock text that represents instructions on how to complete the quiz banana pudding apples oranges the inside of a potato is kinda mushy if you leave it in the cupboard for too long and once they go rotten the smell is unbearable.";
+    description.innerText = "This is a quiz to test your basic javascript knowledge! You have 50 seconds and will be penalised for incorrect answers. Check out your top scores by clicking the link the top left.";
     description.setAttribute("class", "text-center");
     content.append(description);
 
+    // Create and append a button to start the quiz
     var button = document.createElement("button");
     button.innerText = "Start Quiz";
     button.setAttribute("class", "btn-center");
@@ -26,25 +34,21 @@ function displayLanding() {
     content.append(button);
 }
 
-function clearContent() {
-    content.innerHTML = "";
-}
-
-function renderNextQuestion() {
-    clearContent(); // Clear the currently displayed elements
+// Displays the current question
+function renderQuestion() {
+    clearContent(); // Clear whatever is currently displayed
     
-    currentQuestion ++;
-
-    if (currentQuestion !== questions.length) {
+    // Check if all questions have been answered
+    if (currentQuestion < questions.length) {
         var question = questions[currentQuestion];
 
-        // Question
+        // Display the question in a header
         var questionText = document.createElement("h1");
         questionText.setAttribute("class", "text-center");
         questionText.innerText = question.title;
         content.append(questionText);
 
-        // Button for each answer
+        // Create a button for each answer
         for (var i = 0; i < question.choices.length; i++) {
             var button = document.createElement("button");
             button.innerText = (i + 1) + ". " + question.choices[i];
@@ -54,56 +58,60 @@ function renderNextQuestion() {
             content.append(button);
         }
     } else {
-        showFinishedScreen();
+        showFinishedScreen(); // Display the end screen
     }
+
 }
 
+// Function called when the user clicks a button to submit their answer
 function submitAnswer(div) {
+    // Get their answer
     var submittedAnswer = div.getAttribute("data-answer");
     
+    // Check if the answer is correct
     if (submittedAnswer === questions[currentQuestion].answer) {
         displayAnswerResponse("Correct!");
     } else {
         displayAnswerResponse("Wrong!");
-        timer -= 10;
+        updateTimer(timer -= 10);
     }
 
-    renderNextQuestion();
+    currentQuestion ++; // Update which question is next
+
+    renderQuestion(); // Display that question
 }
 
+// Displays a popup briefly to tell the user if they were correct or incorrect
 function displayAnswerResponse(message) {
     var responseWindow = document.getElementById("response");
 
-    if (responseWindow === null) {
-        responseWindow = document.createElement("div");
-        responseWindow.setAttribute("id", "response");
-        responseWindow.setAttribute("class", "text-center");
-        responseWindow.style.display = "none";
-        container.append(responseWindow);       
-    }
-
-    responseWindow.textContent = message;
+    responseWindow.innerHTML = "<hr>" + message;
     responseWindow.style.display = "block";
 
-    var thisInterval = setInterval(function() {
+    // Hides the popup after 1 second
+    var popupInterval = setInterval(function() {
         responseWindow.style.display = "none";
-        clearInterval(thisInterval);
+        clearInterval(popupInterval);
     }, 1000);
 }
 
+// Displays a screen where users can see their score and submit a highscore
 function showFinishedScreen() {
-    quizOver = true;
+    quizOver = true; // Set a flag to tell the timer to stop decrementing
 
-    clearContent(); // Get rid of whatever is currently displayed
+    clearContent();
     
+    // Display a header
     var title = document.createElement("h1");
     title.innerText = "All done!";
     content.append(title);
 
-    var title = document.createElement("p");
-    title.innerText = "Your final score was: " + timer;
-    content.append(title);    
+    // Display a paragraph showing final score
+    var paragraph = document.createElement("p");
+    paragraph.innerText = "Your final score was: " + timer;
+    content.append(paragraph);    
 
+    // Create a form with a button to submit high scores
     var form = document.createElement("form");
 
     var label = document.createElement("label");
@@ -119,6 +127,7 @@ function showFinishedScreen() {
     
     var button = document.createElement("button");
     button.innerText = "Submit High Score";
+    // Append an event listener that saves the highscore locally
     button.addEventListener("click", function(event) {
         event.preventDefault();
 
@@ -137,28 +146,40 @@ function showFinishedScreen() {
 
         location.replace("highscores.html");
     });
+
     form.append(button);
 
     content.append(form);
 }
 
+// Updates the timer to val and also updates the display of the timer
+function updateTimer(val) {
+    timer = val;
+
+    if (timer < 0) {
+        timer = 0;
+        showFinishedScreen();
+    }
+
+    document.getElementById("timer").innerText = "Timer: " + timer;
+}
+
+// Starts the timer and displays the first question
 function startQuiz() {
-    currentQuestion = -1; // Start at the first question
-    timer = 50;
+    currentQuestion = 0; // Start at the first question
+    timer = 50; // Set the timer to its starting value of 50
 
-    var thisInterval = setInterval(function() {
-        timer--;
+    // Create an interval that fires every second
+    var timerInterval = setInterval(function() {
+        // Decrement the timer
+        updateTimer(timer - 1);
 
-        if (timer < 0)  
-            timer = 0;
-
-        document.getElementById("timer").innerText = "Timer: " + timer;
-
-        if (timer === 0 || quizOver) {
-            clearInterval(thisInterval);
-            showFinishedScreen();
+        // Checks if the quiz is over and stops updating the timer if it is
+        if (quizOver) {
+            clearInterval(timerInterval);
         }
     }, 1000);
 
-    renderNextQuestion();
+    // Display the first question
+    renderQuestion();
 }
