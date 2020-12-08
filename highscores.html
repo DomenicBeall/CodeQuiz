@@ -2,6 +2,8 @@
 <html>
     <head>
         <title>Code Quiz</title>
+        <meta name="viewport" content="width=device-width">
+
         <!-- Google Fonts Link -->
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
@@ -11,13 +13,16 @@
     <body>
         <!-- Container to hold all content -->
         <div id="container">
-            <h1>Highscores</h1>
+            <h1 class="text-center">Highscores</h1>
 
             <!-- Container to hold the list of scores -->
             <div id="scorecontainer"></div>
             
-            <button type="button" onclick="returnToQuiz()">Return to Quiz</button>
-            <button type="button" onclick="resetHighscores()">Reset highscores</button>
+            <div class="center" style="margin-top: 10px;">
+                <button type="button" onclick="returnToQuiz()" style="float: left;">Return to Quiz</button>
+                <button type="button" onclick="resetHighscores()" style="float: right;">Reset highscores</button>
+            </div>
+
         </div>
     </body>
 

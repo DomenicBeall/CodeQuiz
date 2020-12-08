@@ -52,7 +52,7 @@ function renderQuestion() {
         for (var i = 0; i < question.choices.length; i++) {
             var button = document.createElement("button");
             button.innerText = (i + 1) + ". " + question.choices[i];
-            button.setAttribute("class", "btn-left");
+            button.setAttribute("class", "btn-block");
             button.setAttribute("data-answer", question.choices[i]);
             button.setAttribute("onclick", "submitAnswer(this)");
             content.append(button);
