@@ -2,27 +2,31 @@
 <html>
     <head>
         <title>Code Quiz</title>
+
+        <!-- Google Fonts Link -->
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+        <!-- Custom styling -->
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        <!-- Need a header with view highscore link on left and timer on right -->
+        <!-- Header to link to highscores and show timer -->
         <header>
-            <!-- Ensure this a tag has the necessary attributes -->
             <div id="highscorelink"><a href="highscores.html">Show Highscores</a></div>
             <div id="timer">Timer: 50</div>
         </header>
         
-        <!-- Need a content container div to give padding to either side of the quiz -->
-        <!-- This should be resolution dependent -->
+        <!-- Container to hold everything-->
         <div id="container">
+            <!-- Container for the dynamic content, this allows me to clear the questions without clearing other content -->
             <div id="content">
 
             </div>
         </div>
     </body>
 
+    <!-- Stores the questions to be used by the quiz -->
     <script src="questions.js"></script>
+    <!-- Displays the questions and saves the highscore -->
     <script src="index.js"></script>
 </html>

@@ -2,20 +2,25 @@
 <html>
     <head>
         <title>Code Quiz</title>
+        <!-- Google Fonts Link -->
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+        <!-- Custom styling -->
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
+        <!-- Container to hold all content -->
         <div id="container">
             <h1>Highscores</h1>
-            <div id="scorecontainer">
 
-            </div>
+            <!-- Container to hold the list of scores -->
+            <div id="scorecontainer"></div>
+            
             <button type="button" onclick="returntoquiz()">Return to Quiz</button>
             <button type="button" onclick="resetHighscores()">Reset highscores</button>
         </div>
     </body>
 
+    <!-- Script to load and display highscore list -->
     <script src="highscores.js"></script>
 </html>
